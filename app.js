@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
 var express               = require("express"),
     app                   = express(),
     port                  = process.env.PORT || 8080,
@@ -15,13 +18,12 @@ var express               = require("express"),
     manageRoutes          = require("./api/routes/manage"),
     methodOverride        = require("method-override");
 
-var configDb = require("./config/database.js");
 const ErrorController = require('./controllers/error');
 
 // Mongoose config
 mongoose.Promise = global.Promise;
-mongoose.connect(configDb.url) // Uses specified url to connect to mongodb
-.then(() => console.log('MongoDb Connection Established: http://localhost:27017'))
+mongoose.connect(process.env.DB_HOST) // Uses specified url to connect to mongodb
+.then(() => console.log('MongoDb Connection Established: ', process.env.DB_HOST))
 .catch((err) => console.log(err));
 
 
