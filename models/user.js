@@ -1,84 +1,77 @@
-var mongoose  = require("mongoose"),
-    bcrypt   = require("bcrypt-nodejs");
+const bcrypt = require('bcrypt-nodejs');
+const mongoose = require('mongoose');
 
 // Define schema for user model
-var Schema = mongoose.Schema;
-var UserSchema = new Schema({
+const { Schema } = mongoose;
+const UserSchema = new Schema({
   email: {
-      type: String,
-      unique: true,
-      required: true,
-      maxlength: 62
+    type: String,
+    unique: true,
+    required: true,
+    maxlength: 62,
   },
   password: {
-      type: String,
-      required: true,
-      minlength: 8
+    type: String,
+    required: true,
+    minlength: 8,
   },
   first_name: {
-      type: String,
-      required: true,
-      maxlength: 50
+    type: String,
+    required: true,
+    maxlength: 50,
   },
   last_name: {
-      type: String,
-      required: true,
-      maxlength: 50
+    type: String,
+    required: true,
+    maxlength: 50,
   },
   address: {
-      type: String,
-
+    type: String,
   },
   address_2: {
-      type: String
+    type: String,
   },
   city: {
-      type: String,
-
+    type: String,
   },
   zip_code: {
-      type: String,
-
+    type: String,
   },
   phone_number: {
-      type: String,
+    type: String,
   },
   age_verification: {
-      type: String,
-      required: true
-  }
+    type: String,
+    required: true,
+  },
 });
 
-UserSchema.pre('save', function(next) {
-  var user = this;
+UserSchema.pre('save', (next) => {
+  const user = this;
   if (this.isModified('password') || this.isNew) {
-    bcrypt.genSalt(10, function(err, salt) {
-      if (err) {
-        return next(err);
+    bcrypt.genSalt(10, (saltErr, salt) => {
+      if (saltErr) {
+        next(saltErr);
       }
-      bcrypt.hash(user.password, salt, null, function(err, hash) {
-        if (err) {
-          return next(err);
+      bcrypt.hash(user.password, salt, null, (hashErr, hash) => {
+        if (hashErr) {
+          next(hashErr);
         }
         user.password = hash;
         next();
       });
     });
-  } else {
-    return next();
+    next();
   }
 });
 
-UserSchema.methods.comparePassword = function(passw, cb) {
-  bcrypt.compare(passw, this.password, function(err, isMatch) {
+UserSchema.methods.comparePassword = (passw, cb) => {
+  bcrypt.compare(passw, this.password, (err, isMatch) => {
     if (err) {
-      return cb(err);
+      cb(err);
     }
     cb(null, isMatch);
   });
 };
-
-
-
 // Create user model
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);

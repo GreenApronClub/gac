@@ -48,7 +48,7 @@ router.get('/strains', (req, res) => {
     });
 });
 
-router.post('/signup', (req, res) => {
+router.post('/signup', (req, res, next) => {
   const { signupData } = req.body;
   const cleanSignupData = {};
   if (!signupData.email || !signupData.password) {
@@ -58,12 +58,10 @@ router.post('/signup', (req, res) => {
     });
   }
   if (!signupData.ageverification) {
-    return res.json({
-      success: false,
-      msg: 'You must be 21 years of age or older in the state of Massachusetts to use our services.',
-    });
+    const errorCode = 1800;
+    next(errorCode);
   }
-  for(var key in signupData) {
+  for (var key in signupData) {
     cleanSignupData[key] = DOMPurify.sanitize(signupData[key]);
     cleanSignupData[key] = validator.escape(cleanSignupData[key]);
   }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as types from '../actionTypes';
-import { ROOT_URL } from '../../config/constants';
+import ROOT_URL from '../../config/constants';
 
 export function editStrain(params, history, values) {
   const request = axios.put(`${ROOT_URL}/manage/strains/${params}`, values);

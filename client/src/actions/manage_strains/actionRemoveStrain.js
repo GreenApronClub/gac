@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as types from '../actionTypes';
-import { ROOT_URL } from '../../config/constants';
+import ROOT_URL from '../../config/constants';
 
 export function removeStrain(params, history) {
   const request = axios.delete(`${ROOT_URL}/manage/strains/${params}`, {headers: {'Authorization': sessionStorage.getItem('jwt')}});

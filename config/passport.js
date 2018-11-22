@@ -7,7 +7,6 @@ var config = require('../config/database'); // Get db config file
 module.exports = function(passport) {
   var opts = {};
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
-  console.log("REQUEST_JWT: " + opts.jwtFromRequest);
   opts.secretOrKey = config.secret;
   // Middleware decodes jwt to verify
   passport.use(new JwtStrategy(opts, (jwt_payload, done) => {

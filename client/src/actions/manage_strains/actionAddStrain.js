@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { reset } from 'redux-form';
 import * as types from '../actionTypes';
-import { ROOT_URL } from '../../config/constants';
+import ROOT_URL from '../../config/constants';
 
 export function addStrain(values) {
   var formData = new FormData();

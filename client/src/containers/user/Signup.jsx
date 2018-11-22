@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import actionSignup from '../../actions/signup/actionSignup';
 import '../css/signup.css';
 
-class SignUp extends Component {
+class Signup extends Component {
+  onSubmit(values) {
+    const { requestSignup, isRequesting } = this.props;
+    console.log(isRequesting);
+    requestSignup(values);
+  }
   renderFirstnameField(field) {
     return (
       <input
@@ -15,7 +23,6 @@ class SignUp extends Component {
       />
     );
   }
-
   renderLastnameField(field) {
     return (
       <input
@@ -28,7 +35,6 @@ class SignUp extends Component {
       />
     );
   }
-
   renderEmailField(field) {
     return (
       <input
@@ -42,7 +48,6 @@ class SignUp extends Component {
       />
     );
   }
-
   renderPasswordField(field) {
     return (
       <input
@@ -55,7 +60,6 @@ class SignUp extends Component {
       />
     );
   }
-
   renderAddressField(field) {
     return (
       <input
@@ -67,7 +71,6 @@ class SignUp extends Component {
       />
     );
   }
-
   renderAddress2Field(field) {
     return (
       <input
@@ -79,7 +82,6 @@ class SignUp extends Component {
       />
     );
   }
-
   renderPhonenumberField(field) {
     return (
       <input
@@ -91,7 +93,6 @@ class SignUp extends Component {
       />
     );
   }
-
   renderCountryField(field) {
     return (
       <input
@@ -103,7 +104,6 @@ class SignUp extends Component {
       />
     );
   }
-
   renderCityField(field) {
     return (
       <input
@@ -115,7 +115,6 @@ class SignUp extends Component {
       />
     );
   }
-
   renderZipcodeField(field) {
     return (
       <input
@@ -129,9 +128,10 @@ class SignUp extends Component {
   }
 
   render() {
+    const { handleSubmit } = this.props;
     return (
       <div className="form-container">
-        <form className="signup-form">
+        <form className="signup-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <div className="container">
             <div className="row">
               <div className="col-md-12">
@@ -279,8 +279,18 @@ const validate = (values) => {
   }
   return errors;
 };
-
-export default reduxForm({
+const mapStateToProps = state => (
+  {
+    isRequesting: state.signup.isRequesting,
+    signupError: state.signup.signupError,
+  }
+);
+export default withRouter(connect(
+  mapStateToProps,
+  {
+    requestSignup: actionSignup,
+  },
+)(reduxForm({
   validate,
   form: 'SignUpForm',
-})(SignUp);
+})(Signup)));

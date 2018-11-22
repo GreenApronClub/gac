@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import NavBar from './containers/navbar/navbar';
-import SignUp from './containers/user/Signup';
+import Signup from './containers/user/Signup';
 import Login from './containers/user/Login';
 import ActiveOrders from './containers/dispensary/orders/activeOrders';
 import ManageStrain from './containers/dispensary/manage_strains/manageStrain';
@@ -25,7 +25,7 @@ const App = () => (
           )
         )}
       />
-      <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/signup" component={Signup} />
       <Route
         exact
         path="/active-orders"
