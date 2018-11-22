@@ -126,6 +126,16 @@ class Signup extends Component {
       />
     );
   }
+  renderAgeVerificationCheckField(field) {
+    return (
+      <div className="form-check">
+        <label className="form-check-label age-verification" htmlFor="age-checkbox">
+          <input id="age-checkbox" className="form-check-input" type="checkbox" {...field.input} />
+          <span>I am 21 years of age or older</span>
+        </label>
+      </div>
+    );
+  }
 
   render() {
     const { handleSubmit } = this.props;
@@ -204,7 +214,7 @@ class Signup extends Component {
                       <i className="ion-ios-home-outline" />
                     </div>
                   </div>
-                  <Field name="address 2" component={this.renderAddress2Field} />
+                  <Field name="address-2" component={this.renderAddress2Field} />
                 </div>
               </div>
             </div>
@@ -214,7 +224,7 @@ class Signup extends Component {
                   <div className="input-group-prepend">
                     <div className="input-group-text">#</div>
                   </div>
-                  <Field name="Phonenumber" component={this.renderPhonenumberField} />
+                  <Field name="phonenumber" component={this.renderPhonenumberField} />
                 </div>
               </div>
               <div className="col-md-6 form-group">
@@ -224,7 +234,7 @@ class Signup extends Component {
                       <i className="ion-map" />
                     </div>
                   </div>
-                  <Field name="Country" component={this.renderCountryField} />
+                  <Field name="country" component={this.renderCountryField} />
                 </div>
               </div>
             </div>
@@ -236,7 +246,7 @@ class Signup extends Component {
                       <i className="ion-map" />
                     </div>
                   </div>
-                  <Field name="City" component={this.renderCityField} />
+                  <Field name="city" component={this.renderCityField} />
                 </div>
               </div>
               <div className="col-md-6 form-group">
@@ -246,19 +256,14 @@ class Signup extends Component {
                       <i className="ion-map" />
                     </div>
                   </div>
-                  <Field name="Zipcode" component={this.renderZipcodeField} />
+                  <Field name="zipcode" component={this.renderZipcodeField} />
                 </div>
               </div>
             </div>
             <div className="row justify-content-center">
               <div className="col-md-4 ml-5">
                 <div className="input-group">
-                  <div className="form-check">
-                    <label className="form-check-label age-verification" htmlFor="age-checkbox">
-                      <input id="age-checkbox" className="form-check-input" type="checkbox" value="" />
-                      <span>I am 21 years of age or older</span>
-                    </label>
-                  </div>
+                  <Field name="ageverification" component={this.renderAgeVerificationCheckField} />
                 </div>
               </div>
             </div>

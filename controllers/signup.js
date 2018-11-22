@@ -8,7 +8,6 @@ const { window } = (new JSDOM(''));
 const DOMPurify = createDompurify(window);
 
 exports.register_user = (req, res, next) => {
-  console.log('REQ BODY: ', req.body);
   const { body } = req;
   const cleanSignupData = {};
   const inputKeys = Object.keys(body);
@@ -22,53 +21,43 @@ exports.register_user = (req, res, next) => {
     body[key] = DOMPurify.sanitize(body[key]);
     cleanSignupData[key] = validator.escape(body[key]);
   });
-  console.log('CLEAN SIGNUP DATA: ', cleanSignupData);
-  const validatedSignup = signupValidation.validate(cleanSignupData);
-  const { validatedSignupData } = signupValidation;
-  if (validatedSignup === true) {
-    const newUser = new User({
-      email: validatedSignupData.email,
-      password: validatedSignupData.password,
-      first_name: validatedSignupData.firstName,
-      last_name: validatedSignupData.lastName,
-      address: validatedSignupData.address,
-      address2: validatedSignupData.address2,
-      city: validatedSignupData.city,
-      zip_code: validatedSignupData.zipCode,
-      phone_number: validatedSignupData.phoneNumber,
-      age_verification: validatedSignupData.ageVerification,
-    });
-    newUser.save((err) => {
-      if (err && err.code === 11000) {
-        console.log(err.code);
-        next(err.code);
-      }
-      if (err && err.errors.email) {
-        console.log(err);
-        const errorCode = 1000;
-        next(errorCode);
-      }
-      if (err && err.errors.first_name) {
-        console.log(err);
-        const errorCode = 1100;
-        next(errorCode);
-      }
-      if (err && err.errors.password) {
-        console.log(err);
-        console.log(err);
-        const errorCode = 1300;
-        next(errorCode);
-      }
-      if (err) {
-        console.log(err);
-        next(err);
-      }
-      res.json({
-        status: 200,
-        message: 'You have succesfully registered.',
+  signupValidation.validate(cleanSignupData, (validationErrCode, data) => {
+    if (validationErrCode) {
+      next(validationErrCode);
+    } else {
+      console.log('DATA: ', data.email);
+      const newUser = new User({
+        password: data.password,
+        first_name: data.firstname,
+        last_name: data.lastname,
+        age_verification: data.ageverification,
+        email: data.email,
       });
-    });
-  } else {
-    next(12000);
-  }
+      newUser.save((err) => {
+        console.log('NEWUSER ERR: ', err);
+        if (err && err.code === 11000) {
+          console.log(err.code);
+          next(err.code);
+        }
+        if (err && err.errors.email) {
+          console.log(err);
+          next(1000);
+        }
+        if (err && err.errors.first_name) {
+          console.log(err);
+          next(1100);
+        }
+        if (err && err.errors.password) {
+          console.log(err);
+          next(1300);
+        }
+        if (err) {
+          console.log(err);
+          next(err);
+        }
+        res.status(200);
+        res.json({ message: 'You have succesfully registered.' });
+      });
+    }
+  });
 };

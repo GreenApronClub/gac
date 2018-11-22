@@ -48,21 +48,19 @@ const UserSchema = new Schema({
 
 UserSchema.pre('save', (next) => {
   const user = this;
-  if (this.isModified('password') || this.isNew) {
-    bcrypt.genSalt(10, (saltErr, salt) => {
-      if (saltErr) {
-        next(saltErr);
+  console.log('USER: ', user);
+  bcrypt.genSalt(10, (saltErr, salt) => {
+    if (saltErr) {
+      next(saltErr);
+    }
+    bcrypt.hash(user.password, salt, null, (hashErr, hash) => {
+      if (hashErr) {
+        next(hashErr);
       }
-      bcrypt.hash(user.password, salt, null, (hashErr, hash) => {
-        if (hashErr) {
-          next(hashErr);
-        }
-        user.password = hash;
-        next();
-      });
+      user.password = hash;
+      next();
     });
-    next();
-  }
+  });
 });
 
 UserSchema.methods.comparePassword = (passw, cb) => {
