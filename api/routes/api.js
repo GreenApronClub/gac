@@ -1,35 +1,31 @@
-const mongoose = require('mongoose');
-const passport = require('passport');
-const config = require('../../config/database');
+import passport from 'passport';
+import { router } from 'express';
+import jwt from 'jsonwebtoken';
+import xssFilters from 'xss-filters';
+import createDompurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+import validator from 'validator';
+import config from '../../config/database';
+import Stock from '../../models/stock';
+import Cart from '../../models/cart';
+import User from '../../models/user';
+import signupValidation from '../../validation/signupValidation';
+import loginValidation from '../../validation/loginValidation';
+import stockValidation from '../../validation/stockValidation';
+
 require('../config/passport')(passport);
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const router = express.Router();
-const xssFilters = require('xss-filters');
-const User = require('../../models/user');
-const signupValidation = require('../../validation/signupValidation.js');
-const loginValidation = require('../../validation/loginValidation.js');
-const stockValidation = require('../../validation/stockValidation.js');
-const loadCollection = require('../../utils/utils.js');
-const createDompurify = require('dompurify');
-const { JSDOM } = require('jsdom');
-const window = (new JSDOM('')).window;
+
+const { window } = new JSDOM('');
 const DOMPurify = createDompurify(window);
-const validator = require("validator");
-const Stock = require('../../models/stock');
-const Cart = require('../../models/cart');
 
 router.post('/new_strain', (req, res) => {
-  var newStockData = req.body;
-  var cleanStockData = {};
+  const newStockData = req.body;
+  const cleanStockData = {};
   for(var key in newStockData) {
     cleanStockData[key] = DOMPurify.sanitize(newStockData[key]);
     cleanStockData[key] = validator.escape(cleanStockData[key]);
   }
-  var validatedStock = stockValidation.validate(
-    cleanStockData.price
-  );
-  var validatedStockData = stockValidation.validatedStockData;
+  const { validatedStockData } = stockValidation;
   var newStrain = new Stock({
     name: cleanStockData.name,
     price: validatedStockData.price,
@@ -53,71 +49,110 @@ router.get('/strains', (req, res) => {
 });
 
 router.post('/signup', (req, res) => {
-  var signupData = req.body;
-  var cleanSignupData = {};
+  const { signupData } = req.body;
+  const cleanSignupData = {};
   if (!signupData.email || !signupData.password) {
-    res.json({success: false, msg: 'Please enter an email and a password.'});
-  } else if (!signupData.ageverification) {
-    res.json({success: false, msg: 'You must be 21 years of age or older in the state of Massachusetts to use our services.'});
-  } else {
-    for(var key in signupData) {
-      cleanSignupData[key] = DOMPurify.sanitize(signupData[key]);
-      cleanSignupData[key] = validator.escape(cleanSignupData[key]);
-    }
-    var validatedSignup = signupValidation.validate(
-      cleanSignupData.email,
-      cleanSignupData.firstname,
-      cleanSignupData.lastname,
-      cleanSignupData.password,
-      cleanSignupData.address,
-      cleanSignupData.address2,
-      cleanSignupData.city,
-      cleanSignupData.zipcode,
-      cleanSignupData.phonenumber,
-      cleanSignupData.ageverification
-    );
-    var validatedSignupData = signupValidation.validatedSignupData;
-    if (validatedSignup === true) {
-      var newUser = new User({
-        email: validatedSignupData.email,
-        password: validatedSignupData.password,
-        first_name: validatedSignupData.firstName,
-        last_name: validatedSignupData.lastName,
-        address: validatedSignupData.address,
-        address2: validatedSignupData.address2,
-        city: validatedSignupData.city,
-        zip_code: validatedSignupData.zipCode,
-        phone_number: validatedSignupData.phoneNumber,
-        age_verification: validatedSignupData.ageVerification
-      });
-      newUser.save(err => {
-        if (err && err.code === 11000) {
-            console.log(err.code)
-            return res.json({success: false, msg: 'The email provided is already in use.', reason: "Email already in use", error: err});
-        } else if (err && err.errors.email) {
-            console.log(err)
-            return res.json({success: false, msg: 'Email validation error', error: err.errors.email.kind});
-        } else if (err && err.errors.first_name) {
-            console.log(err)
-            return res.json({success: false, msg: 'First name validation error', error: err.errors.first_name.kind});
-        } else if (err && err.errors.password) {
-            console.log(err)
-            if (err.errors.password.kind === "minlength") {
-              return res.json({success: false, msg: 'Password must be at least 8 characters long', error: err.errors.password.kind});
-            } else {
-              return res.json({success: false, msg: 'Password validation error', error: err.errors.password.kind});
-            }
-        } else if (err) {
-            console.log(err)
-            return res.json({success: false, msg: 'Validation error', error: err});
-        } else {
-            res.json({status: 200, message : 'You have succesfully registered.'});
-        }
-      });
-    } else {
-      return res.json({success: false, msg: validatedSignup, reason: "Wrong format"});
-    }
+    return res.json({
+      success: false,
+      msg: 'Please enter an email and a password.',
+    });
   }
+  if (!signupData.ageverification) {
+    return res.json({
+      success: false,
+      msg: 'You must be 21 years of age or older in the state of Massachusetts to use our services.',
+    });
+  }
+  for(var key in signupData) {
+    cleanSignupData[key] = DOMPurify.sanitize(signupData[key]);
+    cleanSignupData[key] = validator.escape(cleanSignupData[key]);
+  }
+  const validatedSignup = signupValidation.validate(
+    cleanSignupData.email,
+    cleanSignupData.firstname,
+    cleanSignupData.lastname,
+    cleanSignupData.password,
+    cleanSignupData.address,
+    cleanSignupData.address2,
+    cleanSignupData.city,
+    cleanSignupData.zipcode,
+    cleanSignupData.phonenumber,
+    cleanSignupData.ageverification,
+  );
+  const { validatedSignupData } = signupValidation;
+  if (validatedSignup === true) {
+    const newUser = new User({
+      email: validatedSignupData.email,
+      password: validatedSignupData.password,
+      first_name: validatedSignupData.firstName,
+      last_name: validatedSignupData.lastName,
+      address: validatedSignupData.address,
+      address2: validatedSignupData.address2,
+      city: validatedSignupData.city,
+      zip_code: validatedSignupData.zipCode,
+      phone_number: validatedSignupData.phoneNumber,
+      age_verification: validatedSignupData.ageVerification,
+    });
+    newUser.save((err) => {
+      if (err && err.code === 11000) {
+        console.log(err.code);
+        return res.json({
+          success: false,
+          msg: 'The email provided is already in use.',
+          reason: 'Email already in use',
+          error: err,
+        });
+      }
+      if (err && err.errors.email) {
+        console.log(err);
+        return res.json({
+          success: false,
+          msg: 'Email validation error',
+          error: err.errors.email.kind,
+        });
+      }
+      if (err && err.errors.first_name) {
+        console.log(err);
+        return res.json({
+          success: false,
+          msg: 'First name validation error',
+          error: err.errors.first_name.kind,
+        });
+      }
+      if (err && err.errors.password) {
+        console.log(err);
+        if (err.errors.password.kind === 'minlength') {
+          return res.json({
+            success: false,
+            msg: 'Password must be at least 8 characters long',
+            error: err.errors.password.kind,
+          });
+        }
+        return res.json({
+          success: false,
+          msg: 'Password validation error',
+          error: err.errors.password.kind,
+        });
+      }
+      if (err) {
+        console.log(err);
+        return res.json({
+          success: false,
+          msg: 'Validation error',
+          error: err,
+        });
+      }
+      return res.json({
+        status: 200,
+        message: 'You have succesfully registered.',
+      });
+    });
+  }
+  return res.json({
+    success: false,
+    msg: validatedSignup,
+    reason: 'Wrong format',
+  });
 });
 
 router.post('/login', (req, res) => {
