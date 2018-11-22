@@ -272,15 +272,13 @@ class SignUp extends Component {
   }
 }
 
-function validate(values) {
+const validate = (values) => {
   const errors = {};
-
   if (!values.email || values.email.length < 3) {
     errors.email = 'Please enter a valid email address';
   }
-
   return errors;
-}
+};
 
 export default reduxForm({
   validate,
