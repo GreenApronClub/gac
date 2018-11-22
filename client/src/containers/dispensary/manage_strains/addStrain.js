@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router-dom';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { addStrain, clearUpload } from '../../../actions/manage_strains/actionAddStrain';
-import { clearMessage } from '../../../actions/clear/clearAlert';
+import * as clearAlertActions from '../../../actions/clear/clearState';
 import { selectedImage } from '../../../actions/upload/actionImageUpload';
-import classNames from 'classnames';
 import * as types from '../../../actions/actionTypes';
 import './addStrain.css';
 
@@ -144,6 +144,6 @@ export default withRouter(reduxForm({
   connect(mapStateToProps, {
     addStrain,
     selectedImage,
-    clearMessage,
+    clearMessage: clearAlertActions.clearMessage,
     clearUpload })(AddStrain)
 ));

@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { requestLogin } from '../../actions/login/actionLogin';
+import * as loginActions from '../../actions/login/actionLogin';
 import '../css/login.css';
 
 class Login extends Component {
@@ -86,7 +86,5 @@ function mapStateToProps(state) {
 
 export default withRouter(reduxForm({
   validate,
-  form: 'LoginForm'
-})(
-  connect(mapStateToProps, { requestLogin })(Login)
-));
+  form: 'LoginForm',
+})(connect(mapStateToProps, { requestLogin: loginActions.requestLogin })(Login)));

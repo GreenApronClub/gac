@@ -3,7 +3,7 @@ import * as types from '../actionTypes';
 
 export const IsLoggedIn = false;
 
-export default function requestLogin(values, props) {
+export function requestLogin(values, props) {
   const ROOT_URL = 'http://localhost:8080';
   const request = axios.post(`${ROOT_URL}/login`, values);
   return (dispatch) => {
