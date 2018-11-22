@@ -35,7 +35,11 @@
     "validator": "^9.4.1",
     "xss-filters": "^1.2.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  },
   "scripts": {
     "start": "node app.js",
     "server": "nodemon app.js"

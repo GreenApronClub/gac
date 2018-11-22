@@ -26,8 +26,6 @@ mongoose.connect(process.env.DB_HOST) // Uses specified url to connect to mongod
 .then(() => console.log('MongoDb Connection Established: ', process.env.DB_HOST))
 .catch((err) => console.log(err));
 
-
-
 // Template config
 app.set("view engine", "ejs");
 
@@ -39,7 +37,6 @@ app.use(cors());
 app.use(methodOverride("_method"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-
 // Enables cors
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -47,12 +44,9 @@ app.use((req, res, next) => {
   // res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
 });
-
 // Passport config
 console.log("INITIALIZING PASSPORT...");
 app.use(passport.initialize());
-
-
 // Routes
 app.get('/', (req, res) => {
   res.render('home');
