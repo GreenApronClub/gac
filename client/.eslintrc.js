@@ -21,5 +21,10 @@ module.exports = {
         "for-direction": 0,
         "no-plusplus": 0,
         "camelcase": 0,
-    }
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+      }
 };
