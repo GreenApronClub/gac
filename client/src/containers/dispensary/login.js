@@ -86,9 +86,11 @@ function validate(values) {
   return errors;
 }
 
-function mapStateToProps(state) {
-  return { errorMessage: state.loginError.message };
-}
+const mapStateToProps = state => (
+  {
+    errorMessage: state.loginError.message,
+  }
+);
 
 export default reduxForm({
   validate,
