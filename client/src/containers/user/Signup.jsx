@@ -15,90 +15,139 @@ class SignUp extends Component {
       />
     );
   }
+
   renderLastnameField(field) {
     return (
-      <input className="form-control"
-        type="text" maxLength="62" required placeholder="Lastname"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="text"
+        maxLength="62"
+        required
+        placeholder="Lastname"
+        {...field.input}
+      />
     );
   }
+
   renderEmailField(field) {
     return (
-      <input className="form-control"
-        type="text" size="64" maxLength="64" required placeholder="Email"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="text"
+        size="64"
+        maxLength="64"
+        required
+        placeholder="Email"
+        {...field.input}
+      />
     );
   }
+
   renderPasswordField(field) {
     return (
-      <input className="form-control"
-        type="password" maxLength="62" required placeholder="Password"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="password"
+        maxLength="62"
+        required
+        placeholder="Password"
+        {...field.input}
+      />
     );
   }
+
   renderAddressField(field) {
     return (
-      <input className="form-control"
-        type="text" maxLength="62" placeholder="Address"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="text"
+        maxLength="62"
+        placeholder="Address"
+        {...field.input}
+      />
     );
   }
+
   renderAddress2Field(field) {
     return (
-      <input className="form-control"
-        type="text" maxLength="62" placeholder="Address 2"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="text"
+        maxLength="62"
+        placeholder="Address 2"
+        {...field.input}
+      />
     );
   }
+
   renderPhonenumberField(field) {
     return (
-      <input className="form-control"
-        type="number" maxLength="62" placeholder="Phone number"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="number"
+        maxLength="62"
+        placeholder="Phone number"
+        {...field.input}
+      />
     );
   }
+
   renderCountryField(field) {
     return (
-      <input className="form-control"
-        type="text" maxLength="62" placeholder="Country"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="text"
+        maxLength="62"
+        placeholder="Country"
+        {...field.input}
+      />
     );
   }
+
   renderCityField(field) {
     return (
-      <input className="form-control"
-        type="text" maxLength="62"  placeholder="City"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="text"
+        maxLength="62"
+        placeholder="City"
+        {...field.input}
+      />
     );
   }
+
   renderZipcodeField(field) {
     return (
-      <input className="form-control"
-        type="text" maxLength="62" placeholder="Zip code"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="text"
+        maxLength="62"
+        placeholder="Zip code"
+        {...field.input}
+      />
     );
   }
 
   render() {
-    return(
+    return (
       <div className="form-container">
         <form className="signup-form">
           <div className="container">
             <div className="row">
               <div className="col-md-12">
                 <div variant="info">
-                  <div className="left"></div>
+                  <div className="left" />
                 </div>
               </div>
             </div>
           </div>
-            <div className="container alert-box">
+          <div className="container alert-box">
             <div className="row">
               <div className="col-md-6 form-group">
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
-                      <i className="ion-ios-person-outline"></i>
+                      <i className="ion-ios-person-outline" />
                     </div>
                   </div>
                   <Field name="firstname" component={this.renderFirstnameField} />
@@ -108,7 +157,7 @@ class SignUp extends Component {
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
-                      <i className="ion-ios-person-outline"></i>
+                      <i className="ion-ios-person-outline" />
                     </div>
                   </div>
                   <Field name="lastname" component={this.renderLastnameField} />
@@ -120,7 +169,7 @@ class SignUp extends Component {
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
-                      <i className="ion-ios-email-outline"></i>
+                      <i className="ion-ios-email-outline" />
                     </div>
                   </div>
                   <Field name="email" component={this.renderEmailField} />
@@ -130,7 +179,7 @@ class SignUp extends Component {
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
-                      <i className="ion-ios-locked-outline"></i>
+                      <i className="ion-ios-locked-outline" />
                     </div>
                   </div>
                   <Field name="password" component={this.renderPasswordField} />
@@ -142,7 +191,7 @@ class SignUp extends Component {
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
-                      <i className="ion-ios-home-outline"></i>
+                      <i className="ion-ios-home-outline" />
                     </div>
                   </div>
                   <Field name="address" component={this.renderAddressField} />
@@ -152,7 +201,7 @@ class SignUp extends Component {
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
-                      <i className="ion-ios-home-outline"></i>
+                      <i className="ion-ios-home-outline" />
                     </div>
                   </div>
                   <Field name="address 2" component={this.renderAddress2Field} />
@@ -163,9 +212,7 @@ class SignUp extends Component {
               <div className="col-md-6 form-group">
                 <div className="input-group">
                   <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      #
-                    </div>
+                    <div className="input-group-text">#</div>
                   </div>
                   <Field name="Phonenumber" component={this.renderPhonenumberField} />
                 </div>
@@ -174,7 +221,7 @@ class SignUp extends Component {
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
-                      <i className="ion-map"></i>
+                      <i className="ion-map" />
                     </div>
                   </div>
                   <Field name="Country" component={this.renderCountryField} />
@@ -186,7 +233,7 @@ class SignUp extends Component {
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
-                      <i className="ion-map"></i>
+                      <i className="ion-map" />
                     </div>
                   </div>
                   <Field name="City" component={this.renderCityField} />
@@ -196,7 +243,7 @@ class SignUp extends Component {
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
-                      <i className="ion-map"></i>
+                      <i className="ion-map" />
                     </div>
                   </div>
                   <Field name="Zipcode" component={this.renderZipcodeField} />
@@ -208,8 +255,8 @@ class SignUp extends Component {
                 <div className="input-group">
                   <div className="form-check">
                     <label className="form-check-label age-verification" htmlFor="age-checkbox">
-                    <input id="age-checkbox" className="form-check-input" type="checkbox" value="" />
-                      I am 21 years of age or older
+                      <input id="age-checkbox" className="form-check-input" type="checkbox" value="" />
+                      <span>I am 21 years of age or older</span>
                     </label>
                   </div>
                 </div>
@@ -229,7 +276,7 @@ function validate(values) {
   const errors = {};
 
   if (!values.email || values.email.length < 3) {
-    errors.email = "Please enter a valid email address";
+    errors.email = 'Please enter a valid email address';
   }
 
   return errors;
@@ -237,5 +284,5 @@ function validate(values) {
 
 export default reduxForm({
   validate,
-  form: 'SignUpForm'
+  form: 'SignUpForm',
 })(SignUp);
