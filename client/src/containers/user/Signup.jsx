@@ -5,9 +5,14 @@ import '../css/signup.css';
 class SignUp extends Component {
   renderFirstnameField(field) {
     return (
-      <input className="form-control"
-        type="text" maxLength="62" required placeholder="Firstname"
-        {...field.input} />
+      <input
+        className="form-control"
+        type="text"
+        maxLength="62"
+        required
+        placeholder="Firstname"
+        {...field.input}
+      />
     );
   }
   renderLastnameField(field) {
@@ -223,7 +228,7 @@ class SignUp extends Component {
 function validate(values) {
   const errors = {};
 
-  if(!values.email || values.email.length < 3) {
+  if (!values.email || values.email.length < 3) {
     errors.email = "Please enter a valid email address";
   }
 

@@ -73,7 +73,7 @@ class AddStrain extends Component {
         name={field.name}
         onChange={(image) => {
           var files = image.target.files;
-          if(!files[0])
+          if (!files[0])
             return;
           field.input.onChange(files[0]);
           var reader = new FileReader();

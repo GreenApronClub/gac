@@ -7,7 +7,7 @@ export function editStrain(params, history, values) {
 
   return (dispatch) => {
     request.then(response => {
-      if(response.data) {
+      if (response.data) {
         dispatch({ type: types.EDIT_STRAIN, payload: response.data.success });
         history.push(`/manage-strain/${params}`);
       }

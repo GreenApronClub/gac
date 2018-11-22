@@ -8,7 +8,7 @@ export function fetchStrains(values) {
 
   return (dispatch) => {
     request.then(response => {
-      if(response.data) {
+      if (response.data) {
         dispatch({ type: types.FETCH_STRAIN_LIST, payload: response.data });
       }
     })
@@ -23,10 +23,10 @@ export function searchStrain(values, errorMessage) {
 
   return (dispatch) => {
     request.then(response => {
-      if(response.data) {
+      if (response.data) {
         dispatch({ type: types.FETCH_STRAIN_LIST, payload: response.data });
       }
-      if(errorMessage) {
+      if (errorMessage) {
         dispatch({ type: types.FETCH_STRAIN_LIST_ERROR, payload: '' });
       }
     })

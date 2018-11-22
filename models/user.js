@@ -51,13 +51,13 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
   var user = this;
-  if(this.isModified('password') || this.isNew) {
+  if (this.isModified('password') || this.isNew) {
     bcrypt.genSalt(10, function(err, salt) {
-      if(err) {
+      if (err) {
         return next(err);
       }
       bcrypt.hash(user.password, salt, null, function(err, hash) {
-        if(err) {
+        if (err) {
           return next(err);
         }
         user.password = hash;
@@ -71,7 +71,7 @@ UserSchema.pre('save', function(next) {
 
 UserSchema.methods.comparePassword = function(passw, cb) {
   bcrypt.compare(passw, this.password, function(err, isMatch) {
-    if(err) {
+    if (err) {
       return cb(err);
     }
     cb(null, isMatch);

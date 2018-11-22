@@ -7,15 +7,15 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 exports.update_cart = (req, res, next) => {
   var query = Cart.findOne({ userID: req.user._id });
   query.exec((err, cart) => {
-    if(err) return err;
+    if (err) return err;
 
-    if(!cart) {
+    if (!cart) {
       var newCart = new Cart({
         userID: req.user._id,
         cart_items: { _id: req.body.productId, product: { productID : req.body.productId }}
       });
       newCart.save(err => {
-        if(err) {
+        if (err) {
           console.log(err);
         }
         // console.log("NEW CART ADDED");
@@ -36,7 +36,7 @@ exports.update_cart = (req, res, next) => {
       { "_id": cartID, "cart_items._id": cart_itemsID }, { $push:
         {'cart_items' : newProduct}
       }, {upsert: true}, function(err, doc) {
-        if(err) {
+        if (err) {
           console.log("something went wrong");
           console.log(err);
         }
@@ -47,9 +47,9 @@ exports.update_cart = (req, res, next) => {
   function fetchCartLength() {
     var query = Cart.findOne({ userID: req.user._id });
     query.exec((err, cart) => {
-      if(err) return err;
+      if (err) return err;
 
-      if(cart) {
+      if (cart) {
         // console.log("CART LENGTH: " + cart.cart_items.length);
         res.json({ cartLength: cart.cart_items.length, itemExistance: true });
       }
@@ -60,9 +60,9 @@ exports.update_cart = (req, res, next) => {
 exports.get_cart = (req, res, next) => {
   var query = Cart.findOne({ userID: req.user._id });
   query.exec((err, cart) => {
-    if(err) return err;
+    if (err) return err;
 
-    if(cart) {
+    if (cart) {
       // console.log("getting cart items");
       var cartItems = cart.cart_items;
       var cartItemsID = [];
@@ -82,10 +82,10 @@ exports.get_cart = (req, res, next) => {
   function getCartItems(items) {
     var query = Strain.find({'_id': {$in: items}}).select('name price image _id');
     query.exec((err, items) => {
-      if(err) {
+      if (err) {
         console.log(err);
       }
-      if(items) {
+      if (items) {
         // console.log("cart items");
         // console.log(items);
         res.json(items);
@@ -100,12 +100,12 @@ exports.remove_cart_item = (req, res, next) => {
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
   console.log(opts);
   res.json({ message: 'hello' });
-  // if(req.user._id) {
+  // if (req.user._id) {
   //   var query = Cart.findOne({ userID: req.user._id });
   //   query.exec((err, cart) => {
-  //     if(err) return err;
+  //     if (err) return err;
   //
-  //     if(cart) {
+  //     if (cart) {
   //       // next(cart);
   //       res.json({ message: 'reached' });
   //     }
@@ -115,7 +115,7 @@ exports.remove_cart_item = (req, res, next) => {
   // if (req.params.strainId) {
   //   var query = strain.findByIdAndRemove(req.params.strainId);
   //   query.exec(function(err, strain) {
-  //     if(err) {
+  //     if (err) {
   //       next(new Error('Could not delete'), false);
   //     } else {
   //       res.json({message: 'Successfully deleted!'});

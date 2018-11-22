@@ -21,7 +21,7 @@ class NavBar extends Component {
     // var primaryRoute = navData[2];
     // var secondaryRoute = navData[3];
 
-    if(this.props.isLoggedIn === true) {
+    if (this.props.isLoggedIn === true) {
       return (
         <div>
           <nav className="navbar navbar-expand-xs navbar-light">

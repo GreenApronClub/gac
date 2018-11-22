@@ -23,7 +23,7 @@ exports.login_user = (req, res, next) => {
     sanitizedLoginData.password
   );
   var validatedLoginData = loginValidation.validatedLoginData;
-  if(validatedLogin === true) {
+  if (validatedLogin === true) {
     User.findOne({
       email: validatedLoginData.email
     }, (err, user) => {

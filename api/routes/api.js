@@ -36,7 +36,7 @@ router.post('/new_strain', (req, res) => {
     image: newStockData.image
   });
   newStrain.save(err => {
-    if(err) {
+    if (err) {
       res.json({error: "Something went wrong!"});
     } else {
       res.json({success: true, msg: "Success"});
@@ -47,7 +47,7 @@ router.post('/new_strain', (req, res) => {
 router.get('/strains', (req, res) => {
   var query = Stock.find({}).select('name price image -_id');
   query.exec(function(err, stocks) {
-    if(err) return err;
+    if (err) return err;
     res.json(stocks);
     });
 });
@@ -57,7 +57,7 @@ router.post('/signup', (req, res) => {
   var cleanSignupData = {};
   if (!signupData.email || !signupData.password) {
     res.json({success: false, msg: 'Please enter an email and a password.'});
-  } else if(!signupData.ageverification) {
+  } else if (!signupData.ageverification) {
     res.json({success: false, msg: 'You must be 21 years of age or older in the state of Massachusetts to use our services.'});
   } else {
     for(var key in signupData) {
@@ -131,7 +131,7 @@ router.post('/login', (req, res) => {
     sanitizedLoginData.password
   );
   var validatedLoginData = loginValidation.validatedLoginData;
-  if(validatedLogin === true) {
+  if (validatedLogin === true) {
     User.findOne({
       email: validatedLoginData.email
     }, (err, user) => {
@@ -164,9 +164,9 @@ router.post('/login', (req, res) => {
 router.get('/get_user', passport.authenticate('jwt', { session: false}), (req, res) => {
   var query = Cart.findOne({ userID: req.user._id });
   query.exec((err, cart) => {
-    if(err) return err;
+    if (err) return err;
 
-    if(!cart) {
+    if (!cart) {
       res.json({
         firstname: xssFilters.inHTMLData(req.user.first_name),
         cartLength: '0',
@@ -174,7 +174,7 @@ router.get('/get_user', passport.authenticate('jwt', { session: false}), (req, r
       });
     }
 
-    if(cart) {
+    if (cart) {
       console.log(cart.cart_items.length);
       res.json({
         firstname: xssFilters.inHTMLData(req.user.first_name),

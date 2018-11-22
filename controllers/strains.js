@@ -32,7 +32,7 @@ exports.add_strain = (req, res, next) => {
     image: imagePath
   });
   newStrain.save(err => {
-    if(err) {
+    if (err) {
       res.json({success: false, message: "Something went wrong!"});
     } else {
       res.json({success: true, message: "New strain added successfully"});
@@ -43,7 +43,7 @@ exports.add_strain = (req, res, next) => {
 exports.get_strains = (req, res) => {
   var query = strain.find({}).select('name price image _id');
   query.exec(function(err, strains) {
-    if(err) return err;
+    if (err) return err;
     console.log("FETCHING STRAINS...")
     console.log(strains);
     res.json(strains);
@@ -55,11 +55,11 @@ exports.search_strain = (req, res, next) => {
   if (req.body.name) {
     var query = strain.find({ name: req.body.name.toLowerCase() }).select('name price image _id');
     query.exec(function(err, strain) {
-      if(err) {
+      if (err) {
         return err;
       }
 
-      if(strain == '') {
+      if (strain == '') {
         var errorCode = 1700;
         next(errorCode);
       } else {
@@ -74,11 +74,11 @@ exports.get_specific_strain = (req, res, next) => {
     console.log(req.body.check);
     var query = strain.findById(req.params.strainId).select('name price image description type _id');
     query.exec(function(err, strain) {
-      if(err) {
+      if (err) {
         return err;
       }
 
-      if(!strain) {
+      if (!strain) {
         next(new Error('No searches found'), false);
       } else {
         checkCartItem(strain);
@@ -89,9 +89,9 @@ exports.get_specific_strain = (req, res, next) => {
   function checkCartItem(item) {
     var query = Cart.findOne({ userID: req.user._id });
     query.exec((err, cart) => {
-      if(err) return err;
+      if (err) return err;
 
-      if(!cart) {
+      if (!cart) {
         console.log("cart doesnt exist");
         res.json({ itemExistance: false, item: item });
       } else {
@@ -105,7 +105,7 @@ exports.get_specific_strain = (req, res, next) => {
       console.log(item._id);
       Cart.findOne({'cart_items._id': item._id},
       function (err, strain) {
-        if(strain) {
+        if (strain) {
           console.log("Doc found");
           res.json({ itemExistance: true, item: item });
         } else {
@@ -121,11 +121,11 @@ exports.edit_specific_strain = (req, res, next) => {
   if (req.params.strainId) {
     var query = strain.findById(req.params.strainId).select('name price image description type _id');
     query.exec(function(err, strain) {
-      if(err) {
+      if (err) {
         return err;
       }
 
-      if(!strain) {
+      if (!strain) {
         next(new Error('No searches found'), false);
       } else {
         console.log(strain);
@@ -141,11 +141,11 @@ exports.update_specific_strain = (req, res, next) => {
     var data = { name: req.body.name, price: req.body.price, type: req.body.type, description: req.body.description }
     var query = strain.findByIdAndUpdate(req.params.strainId, data);
     query.exec(function(err, updatedStrain) {
-      if(err) {
+      if (err) {
         return err;
       }
 
-      if(!updatedStrain) {
+      if (!updatedStrain) {
         next(new Error('No strain found to update'), false);
       } else {
         res.json({message: 'Changes saved!'})
@@ -159,7 +159,7 @@ exports.delete_strain = (req, res, next) => {
   if (req.params.strainId) {
     var query = strain.findByIdAndRemove(req.params.strainId);
     query.exec(function(err, strain) {
-      if(err) {
+      if (err) {
         next(new Error('Could not delete'), false);
       } else {
         res.json({message: 'Successfully deleted!'});

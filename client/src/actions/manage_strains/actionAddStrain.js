@@ -14,7 +14,7 @@ export function addStrain(values) {
 
   return (dispatch) => {
     request.then(response => {
-      if(response.data) {
+      if (response.data) {
         var imageData = { name: '', image: 'http://nahmdong.com/vitalhill/img/default.png' }
         dispatch(reset('AddStrainForm'));
         dispatch({ type: types.UPLOAD_IMAGE, payload: imageData });

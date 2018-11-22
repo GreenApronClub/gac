@@ -8,9 +8,9 @@ export function fetchStrain(params, upload) {
 
   return (dispatch) => {
     request.then(response => {
-      if(response.data) {
+      if (response.data) {
         dispatch({ type: types.FETCH_STRAIN, payload: response.data });
-        if(upload)
+        if (upload)
           dispatch({ type: types.UPLOAD_IMAGE, payload: response.data });
       }
     })

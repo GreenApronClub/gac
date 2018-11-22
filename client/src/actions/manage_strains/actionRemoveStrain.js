@@ -7,7 +7,7 @@ export function removeStrain(params, history) {
 
   return (dispatch) => {
     request.then(response => {
-      if(response.data) {
+      if (response.data) {
         dispatch({ type: types.REMOVE_STRAIN, payload: response.data.success });
         history.push('/manage-strains');
       }

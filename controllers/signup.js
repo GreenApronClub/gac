@@ -13,7 +13,7 @@ exports.register_user = (req, res, next) => {
   var cleanSignupData = {};
   if (!signupData.email || !signupData.password) {
     res.json({success: false, msg: 'Please enter an email and a password.'});
-  } else if(!signupData.ageverification) {
+  } else if (!signupData.ageverification) {
     res.json({success: false, msg: 'You must be 21 years of age or older in the state of Massachusetts to use our services.'});
   } else {
     for(var key in signupData) {

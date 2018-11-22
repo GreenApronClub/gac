@@ -12,9 +12,9 @@ const Cart = require('../../models/cart');
 router.get('/', passport.authenticate('jwt', { session: false}), (req, res) => {
   var query = Cart.findOne({ userID: req.user._id });
   query.exec((err, cart) => {
-    if(err) return err;
+    if (err) return err;
 
-    if(!cart) {
+    if (!cart) {
       res.json({
         firstname: xssFilters.inHTMLData(req.user.first_name),
         cartLength: '0',
@@ -22,7 +22,7 @@ router.get('/', passport.authenticate('jwt', { session: false}), (req, res) => {
       });
     }
 
-    if(cart) {
+    if (cart) {
       console.log(cart.cart_items.length);
       res.json({
         firstname: xssFilters.inHTMLData(req.user.first_name),

@@ -76,10 +76,10 @@ class Login extends Component {
 function validate(values) {
   const errors = {};
 
-  if(!values.email || values.email.length < 6) {
+  if (!values.email || values.email.length < 6) {
     errors.email = "Please enter a valid email address";
   }
-  if(!values.password) {
+  if (!values.password) {
     errors.password = "Please enter your password";
   }
 
