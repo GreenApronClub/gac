@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import './signup.css';
+import '../css/signup.css';
 
 class SignUp extends Component {
   renderFirstnameField(field) {

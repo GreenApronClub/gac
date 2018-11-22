@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import NavBar from './containers/navbar/navbar';
-import SignUp from './containers/user/signup';
-import Login from './containers/user/login';
+import SignUp from './containers/user/Signup';
+import Login from './containers/user/Login';
 import ActiveOrders from './containers/dispensary/orders/activeOrders';
 import ManageStrain from './containers/dispensary/manage_strains/manageStrain';
 import ManageStrains from './containers/dispensary/manage_strains/manageStrains';
