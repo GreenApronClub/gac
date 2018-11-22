@@ -3,11 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-html {
-  overflow-y: scroll;
-}
-
+html {overflow-y: scroll;}
 body {
     color: #5d5d5d;
     font-family: 'Lato', 'Arial', sans-serif;
@@ -16,11 +12,5 @@ body {
     font-size: 20px;
     padding-right: 0 !important;
 }
-
-button:focus {
-  outline: none;
-}
-
-a:hover {
-  text-decoration: none;
-}
+button:focus {outline: none;}
+a:hover {text-decoration: none;}
